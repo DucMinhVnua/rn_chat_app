@@ -5,7 +5,7 @@ import {ListChatPage} from './src/pages';
 const App = () => {
   return (
     <View>
-      <StatusBar backgroundColor="transparent" />
+      <StatusBar backgroundColor="transparent" hidden />
       <SafeAreaView>
         <ListChatPage />
       </SafeAreaView>
