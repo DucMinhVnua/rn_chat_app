@@ -1,6 +1,7 @@
 import {
   Image,
   ImageBackground,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -46,7 +47,7 @@ export default CardSlide;
 
 const styles = StyleSheet.create({
   container: {
-    height: hp('23%'),
+    height: hp('25%'),
     width: wp('30%'),
   },
 
