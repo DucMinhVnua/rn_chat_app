@@ -1,11 +1,15 @@
 import React from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {SafeAreaView, StatusBar, Text, View} from 'react-native';
+import {ListChatPage} from './src/pages';
 
 const App = () => {
   return (
-    <SafeAreaView>
-      <View></View>
-    </SafeAreaView>
+    <View>
+      <StatusBar backgroundColor="transparent" />
+      <SafeAreaView>
+        <ListChatPage />
+      </SafeAreaView>
+    </View>
   );
 };
 
