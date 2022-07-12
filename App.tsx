@@ -1,15 +1,24 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, Text, View} from 'react-native';
+import {SafeAreaView, ScrollView, StatusBar, Text, View} from 'react-native';
 import {ListChatPage} from './src/pages';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import {colors, variable} from './src/constants';
 
 const App = () => {
   return (
-    <View>
-      <StatusBar backgroundColor="transparent" />
+    <ScrollView
+      contentContainerStyle={{
+        paddingTop: variable.NORMAL_PADDING * 2,
+        backgroundColor: colors.primaryColor,
+      }}>
+      <StatusBar backgroundColor="transparent" hidden />
       <SafeAreaView>
         <ListChatPage />
       </SafeAreaView>
-    </View>
+    </ScrollView>
   );
 };
 
