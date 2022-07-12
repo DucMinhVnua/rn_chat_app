@@ -6,7 +6,7 @@ export const colors = {
   lightGreen: '#00AC83',
   lightGray: '#565E70',
   inputSearchAndIbColor: '#1F232F',
-  textPlaceholder: '#8D8D8D',
+  textPlaceholder: '#B1B5C3',
   textColor: '#fff',
   colorFormInput: '#fff',
 };

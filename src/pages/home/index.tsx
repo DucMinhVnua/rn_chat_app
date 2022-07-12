@@ -4,7 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {NORMAL_PADDING} from '../../constants/variable';
+import {variable} from '../../constants/variable';
 
 const HomeScreen = () => {
   return <View style={styles.container}></View>;
@@ -13,6 +13,6 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: NORMAL_PADDING,
+    padding: variable.NORMAL_PADDING,
   },
 });
