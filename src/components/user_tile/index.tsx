@@ -13,7 +13,7 @@ interface Props {
   subTitle?: string;
   time?: string;
   onPress: any;
-  isGroup: boolean;
+  isGroup?: boolean;
 }
 
 const UserTile = ({

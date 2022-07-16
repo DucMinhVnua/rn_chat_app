@@ -31,7 +31,7 @@ const ImageCustom = ({
         borderColor: borderColor,
       }}>
       <Image
-        source={pathImage}
+        source={{uri: pathImage}}
         style={{
           width: wp(`${width}%`),
           height: hp(`${height}%`),
