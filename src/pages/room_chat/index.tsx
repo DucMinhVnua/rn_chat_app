@@ -1,15 +1,17 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {ImageCustom} from '../../components';
+import {StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {colors, variable} from '../../constants';
+import {TextInput} from 'react-native';
+import Avatars from './components/avatars';
+import Discussion from './components/discussion';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {colors, variable} from '../../constants';
-import Message from './components/message';
-import {TextInput} from 'react-native';
+import {ButtonIcon} from '../../components';
+import FooterField from './components/footer_field';
 
-const DATA = [
+const DATA_MESSAGE = [
   {
     avatar:
       'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg',
@@ -45,121 +47,88 @@ const DATA = [
     id: 1,
     message: 'Đ Ế U!',
   },
+  {
+    avatar:
+      'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg',
+    time: '5:42',
+    id: 1,
+    message: 'Đùa xíu cho zui',
+  },
+  {
+    avatar:
+      'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg',
+    time: '3:23',
+    id: 5,
+    message: 'Xàm quá nhờ',
+  },
+  {
+    avatar:
+      'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg',
+    time: '3:23',
+    id: 4,
+    message: 'Đúng rồi bạn',
+  },
+  {
+    avatar:
+      'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg',
+    time: '5:40',
+    id: 1,
+    message: 'Đ Ế U!',
+  },
+  {
+    avatar:
+      'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg',
+    time: '5:42',
+    id: 1,
+    message: 'Đùa xíu cho zui',
+  },
+  {
+    avatar:
+      'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg',
+    time: '3:23',
+    id: 5,
+    message: 'Xàm quá nhờ',
+  },
+];
+
+const DATA_USERS = [
+  {
+    id: 1,
+    avatar:
+      'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg',
+  },
+  {
+    id: 2,
+    avatar:
+      'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg',
+  },
+  {
+    id: 3,
+    avatar:
+      'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg',
+  },
+  {
+    id: 4,
+    avatar:
+      'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg',
+  },
+  {
+    id: 5,
+    avatar:
+      'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg',
+  },
 ];
 
 const RoomChatPage = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.wrapperListAvatar}>
-        {DATA.map((item, index) => {
-          if (index % 2 === 0) {
-            return (
-              <View key={index} style={{paddingRight: wp('1%')}}>
-                <ImageCustom
-                  key={index}
-                  pathImage={item.avatar}
-                  width={8}
-                  height={4}
-                  borderColor={colors.lightGray}
-                  borderWidth={2}
-                />
-              </View>
-            );
-          } else {
-            return (
-              <View
-                key={index}
-                style={{marginTop: hp('1%'), paddingRight: wp('1%')}}>
-                <ImageCustom
-                  key={index}
-                  pathImage={item.avatar}
-                  width={8}
-                  height={4}
-                  borderColor={colors.lightGray}
-                  borderWidth={2}
-                />
-              </View>
-            );
-          }
-        })}
-      </View>
+      <Avatars DATA={DATA_USERS} />
 
-      <View>
-        <ScrollView>
-          <View style={{paddingRight: wp('1%')}}>
-            <Message
-              pathImage={
-                'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg'
-              }
-              message={
-                'Xin chào aer nhé aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-              }
-              id={1}
-              typeMessage={'text'}
-              time={'21:02'}
-            />
-          </View>
-          <View style={{paddingRight: wp('1%')}}>
-            <Message
-              pathImage={
-                'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg'
-              }
-              message={'Xin chào aer nhé'}
-              id={2}
-              typeMessage={'text'}
-              time={'21:02'}
-            />
-          </View>
-          <View style={{paddingRight: wp('1%')}}>
-            <Message
-              pathImage={
-                'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg'
-              }
-              message={'Xin chào aer nhé'}
-              id={3}
-              typeMessage={'text'}
-              time={'21:02'}
-            />
-          </View>
-          <View style={{paddingRight: wp('1%')}}>
-            <Message
-              pathImage={
-                'https://e4life.vn/wp-content/uploads/2021/08/tieng-anh-bat-dau-bang-chu-a.jpg'
-              }
-              message={'Xin chào aer nhé'}
-              id={4}
-              typeMessage={'text'}
-              time={'21:02'}
-            />
-          </View>
-          {/* {DATA.map((item, index) => {
-            return (
-              <View key={index} style={{paddingRight: wp('1%')}}>
-                <Message
-                  pathImage={item.avatar}
-                  message={item.message}
-                  id={item.id}
-                  typeMessage={'text'}
-                  time={'21:02'}
-                />
-              </View>
-            );
-          })} */}
-        </ScrollView>
-      </View>
-      <View style={styles.fieldMesssage}>
-        <TextInput
-          style={{
-            position: 'relative',
-            bottom: 0,
-            paddingHorizontal: variable.NORMAL_PADDING,
-            borderWidth: 1,
-            color: colors.textColor,
-            fontSize: 18,
-          }}
-          multiline
-        />
-      </View>
+      <Discussion DATA={DATA_MESSAGE} />
+
+      <View style={{flex: 1}}></View>
+
+      <FooterField />
     </View>
   );
 };
@@ -170,16 +139,5 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.primaryColor,
     flex: 1,
-  },
-  wrapperListAvatar: {
-    flexDirection: 'row',
-    marginHorizontal: variable.NORMAL_PADDING,
-    marginVertical: variable.NORMAL_PADDING / 2,
-  },
-  fieldMesssage: {
-    paddingHorizontal: variable.NORMAL_PADDING,
-    paddingVertical: variable.NORMAL_PADDING,
-    flex: 1,
-    justifyContent: 'flex-end',
   },
 });

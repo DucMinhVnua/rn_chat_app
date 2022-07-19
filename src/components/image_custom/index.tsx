@@ -22,6 +22,8 @@ const ImageCustom = ({
   height = 6,
   pathImage,
 }: Props) => {
+  let distance = wp(width) + hp(height) / 2;
+
   return (
     <View
       style={{
@@ -33,8 +35,8 @@ const ImageCustom = ({
       <Image
         source={{uri: pathImage}}
         style={{
-          width: wp(`${width}%`),
-          height: hp(`${height}%`),
+          width: distance,
+          height: distance,
           borderRadius: radius,
         }}
         resizeMode="cover"

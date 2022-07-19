@@ -32,7 +32,7 @@ const Message = ({pathImage, message, typeMessage, time, id}: any) => {
         </Text>
         {id !== 1 && (
           <View style={styles.image}>
-            <ImageCustom pathImage={pathImage} width={7} height={3.5} />
+            <ImageCustom pathImage={pathImage} width={3} height={3} />
           </View>
         )}
       </View>
