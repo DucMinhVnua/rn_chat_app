@@ -44,7 +44,66 @@ const AddGroupPage = () => {
         <ScrollView style={{flexGrow: 1}}>
           <UserTile
             onPress={() => {}}
-            pathImage={require('../../assets/images/img_test.png')}
+            title={'Maciej Kowalski'}
+            subTitle={'Will do, super, thank you'}
+            time={'08:43'}
+          />
+          <UserTile
+            onPress={() => {}}
+            title={'Maciej Kowalski'}
+            subTitle={'Will do, super, thank you'}
+            time={'08:43'}
+          />
+          <UserTile
+            onPress={() => {}}
+            title={'Maciej Kowalski'}
+            subTitle={'Will do, super, thank you'}
+            time={'08:43'}
+          />
+          <UserTile
+            onPress={() => {}}
+            title={'Maciej Kowalski'}
+            subTitle={'Will do, super, thank you'}
+            time={'08:43'}
+          />
+          <UserTile
+            onPress={() => {}}
+            title={'Maciej Kowalski'}
+            subTitle={'Will do, super, thank you'}
+            time={'08:43'}
+          />
+          <UserTile
+            onPress={() => {}}
+            title={'Maciej Kowalski'}
+            subTitle={'Will do, super, thank you'}
+            time={'08:43'}
+          />
+          <UserTile
+            onPress={() => {}}
+            title={'Maciej Kowalski'}
+            subTitle={'Will do, super, thank you'}
+            time={'08:43'}
+          />
+          <UserTile
+            onPress={() => {}}
+            title={'Maciej Kowalski'}
+            subTitle={'Will do, super, thank you'}
+            time={'08:43'}
+          />
+          <UserTile
+            onPress={() => {}}
+            title={'Maciej Kowalski'}
+            subTitle={'Will do, super, thank you'}
+            time={'08:43'}
+          />
+          <UserTile
+            onPress={() => {}}
+            title={'Maciej Kowalski'}
+            subTitle={'Will do, super, thank you'}
+            time={'08:43'}
+          />
+          <UserTile
+            onPress={() => {}}
             title={'Maciej Kowalski'}
             subTitle={'Will do, super, thank you'}
             time={'08:43'}

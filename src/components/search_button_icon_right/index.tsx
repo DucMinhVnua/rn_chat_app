@@ -24,7 +24,7 @@ interface Props {
   widthBtnIcon?: number;
   radiusButton?: number;
   backgroundButtonIcon?: string;
-  imagePath: NodeRequire;
+  imagePath?: NodeRequire;
 }
 
 const SearchButtonRight = ({

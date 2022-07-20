@@ -11,7 +11,7 @@ interface Props {
   borderColor?: string;
   width?: number;
   height?: number;
-  pathImage: any;
+  pathImage?: any;
 }
 
 const ImageCustom = ({
@@ -20,7 +20,7 @@ const ImageCustom = ({
   borderColor,
   width = 12,
   height = 6,
-  pathImage,
+  pathImage = "pathImage = 'https://scontent.fhan4-2.fna.fbcdn.net/v/t1.6435-9/129719143_2833450066940346_5444096240398793362_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=Nbvpi19_v-kAX9GSUjY&_nc_ht=scontent.fhan4-2.fna&oh=00_AT_IATJIMSQ29r3ML1fg9G_WBu1TeRf6s5da7gclPH_jWg&oe=62FDD702',",
 }: Props) => {
   let distance = wp(width) + hp(height) / 2;
 

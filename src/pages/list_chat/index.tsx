@@ -17,7 +17,7 @@ const ListChatPage = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.avatarWithTitle}>
-        <ImageCustom pathImage={require('../../assets/images/img_test.png')} />
+        <ImageCustom />
         <Text
           style={{
             paddingLeft: variable.NORMAL_PADDING,
@@ -82,70 +82,60 @@ const ListChatPage = () => {
       <View>
         <UserTile
           onPress={() => {}}
-          pathImage={require('../../assets/images/img_test.png')}
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => {}}
-          pathImage={require('../../assets/images/img_test.png')}
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => {}}
-          pathImage={require('../../assets/images/img_test.png')}
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => {}}
-          pathImage={require('../../assets/images/img_test.png')}
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => {}}
-          pathImage={require('../../assets/images/img_test.png')}
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => {}}
-          pathImage={require('../../assets/images/img_test.png')}
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => {}}
-          pathImage={require('../../assets/images/img_test.png')}
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => {}}
-          pathImage={require('../../assets/images/img_test.png')}
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => {}}
-          pathImage={require('../../assets/images/img_test.png')}
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => {}}
-          pathImage={require('../../assets/images/img_test.png')}
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
@@ -160,7 +150,8 @@ export default ListChatPage;
 const styles = StyleSheet.create({
   container: {
     paddingLeft: variable.NORMAL_PADDING,
-    backgroundColor: 'transparent',
+    backgroundColor: colors.lightPrimary,
+    flex: 1,
   },
   avatarWithTitle: {
     flexDirection: 'row',
