@@ -13,8 +13,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {InputTextAuthentication} from '../../components';
-import {ButtonAuthencation} from '../../components/button';
+import {ButtonAuthencation, InputTextAuthentication} from '../../components';
 
 const LoginPage = () => {
   const [initialUser, setInitialUser] = useState({
@@ -35,7 +34,6 @@ const LoginPage = () => {
         <View style={styles.buttonViewStyle}>
           <ButtonAuthencation title="ĐĂNG NHẬP" />
         </View>
-
         <View style={styles.textViewStyle}>
           <Text style={styles.textStyle}>Bạn chưa có tài khoản?</Text>
           <TouchableOpacity>

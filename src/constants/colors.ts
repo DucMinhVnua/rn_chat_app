@@ -9,4 +9,6 @@ export const colors = {
   textPlaceholder: '#B1B5C3',
   textColor: '#fff',
   colorFormInput: '#fff',
+  backgroundChat:'#373E4E',
+  myBackfroundChat:"#272A35"
 };

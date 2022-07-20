@@ -16,13 +16,13 @@ interface Props {
   isGroup?: boolean;
 }
 
-const UserTile = ({
+const  UserTile = ({
   pathImage,
   title,
   subTitle,
   time,
   onPress,
-  isGroup = true,
+  isGroup = false,
 }: Props) => {
   return (
     <TouchableOpacity
