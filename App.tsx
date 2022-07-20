@@ -1,6 +1,11 @@
 import React from 'react';
 import {SafeAreaView, ScrollView, StatusBar, Text, View} from 'react-native';
-import {ListChatPage, RoomChatPage} from './src/pages';
+import {
+  AddGroupPage,
+  ChatDetailPage,
+  ListChatPage,
+  RoomChatPage,
+} from './src/pages';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,

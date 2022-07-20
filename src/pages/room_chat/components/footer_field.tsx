@@ -1,5 +1,5 @@
 import {StyleSheet, Text, TextInput, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {ButtonIcon} from '../../../components';
 import {colors, variable} from '../../../constants';
 import {
@@ -9,11 +9,17 @@ import {
 
 const FooterField = () => {
   const [isFocusedField, setFocusedField] = useState(false);
+  const [value, setValue] = useState('');
+
+  const handleChangeText = useCallback((text: any) => {
+    setValue(text);
+  }, []);
 
   return (
     <View style={styles.fieldMesssage}>
       <View style={styles.wrapperFieldIcon}>
         <TextInput
+          onChangeText={handleChangeText}
           onBlur={() => {
             setFocusedField(false);
           }}
@@ -23,7 +29,7 @@ const FooterField = () => {
           style={[
             styles.field,
             {
-              maxWidth: isFocusedField ? wp(75) : wp(65),
+              maxWidth: isFocusedField ? wp(75) : !value ? wp(65) : wp(75),
             },
           ]}
           placeholder="Write"
@@ -31,7 +37,7 @@ const FooterField = () => {
           multiline
         />
         <View style={{marginLeft: -10}}>
-          {!isFocusedField && (
+          {!isFocusedField && !value && (
             <ButtonIcon
               backgroundColor={colors.lightGray}
               widthIconImage={5}
