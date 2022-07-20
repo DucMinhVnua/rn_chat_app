@@ -4,6 +4,7 @@ import {
   AddGroupPage,
   ChatDetailPage,
   ListChatPage,
+  ResgiterPage,
   RoomChatPage,
 } from './src/pages';
 import {
