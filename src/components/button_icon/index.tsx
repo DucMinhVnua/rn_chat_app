@@ -45,6 +45,7 @@ const ButtonIcon = ({
         },
       ]}>
       <Image
+        resizeMode="center"
         style={{
           width: wp(`${widthIconImage}%`),
           height: hp(`${heightIconImage}%`),
