@@ -56,7 +56,7 @@ export const ChatInput = ({
       <View>
         <TouchableOpacity>
           <Image
-            source={require('../../../assets/icons/ic_camera.png')}
+            source={require('../../../assets/images/camera_images.png')}
             style={{
               width: hp('7'),
               height: hp('7'),

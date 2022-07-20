@@ -1,10 +1,10 @@
 import React from 'react';
 import {SafeAreaView, ScrollView, StatusBar, Text, View} from 'react-native';
 import {
-  AddGroupPage,
   ChatDetailPage,
   ListChatPage,
   RoomChatPage,
+  AddGroupPage,
 } from './src/pages';
 import {
   widthPercentageToDP as wp,
@@ -13,7 +13,7 @@ import {
 import {colors, variable} from './src/constants';
 
 const App = () => {
-  return <RoomChatPage />;
+  return <ListChatPage />;
 };
 
 export default App;
