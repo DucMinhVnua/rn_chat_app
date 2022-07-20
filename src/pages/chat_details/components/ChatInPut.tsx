@@ -41,6 +41,7 @@ export const ChatInput = ({
             setValueChat(text);
           }}
           placeholderTextColor={colors.textColor}
+          multiline
         />
 
         {isFocused === true ? null : (
@@ -55,7 +56,7 @@ export const ChatInput = ({
       <View>
         <TouchableOpacity>
           <Image
-            source={require('../../../assets/images/camera_images.png')}
+            source={require('../../../assets/icons/ic_camera.png')}
             style={{
               width: hp('7'),
               height: hp('7'),
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   inPutStyle: {
-    height: hp('7'),
+    minHeight: hp(7),
     borderRadius: 12,
     backgroundColor: colors.inputSearchAndIbColor,
     paddingHorizontal: wp('3'),
