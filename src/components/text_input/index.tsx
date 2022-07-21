@@ -6,19 +6,31 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-interface ParametersInput {
-  placeholder?: string;
-}
+export const InputTextAuthentication = ({
+  placeholder,
+  setFormValue,
+  name,
+  value,
+}: any) => {
+  const handleChangeText = (text: any) => {
+    setFormValue((pre: any) => {
+      pre[name] = text;
+      return {...pre};
+    });
+  };
 
-export const InputTextAuthentication = ({placeholder}: ParametersInput) => (
-  <View style={styles.inputBox}>
-    <TextInput
-      style={styles.inputText}
-      placeholder={placeholder}
-      placeholderTextColor={colors.textPlaceholder}
-    />
-  </View>
-);
+  return (
+    <View style={styles.inputBox}>
+      <TextInput
+        value={value}
+        onChangeText={handleChangeText}
+        style={styles.inputText}
+        placeholder={placeholder}
+        placeholderTextColor={colors.textPlaceholder}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   inputBox: {

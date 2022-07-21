@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
+  Alert,
   Image,
   StatusBar,
   StyleSheet,
@@ -12,9 +13,53 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import database from '@react-native-firebase/database';
 import {ButtonAuthencation, InputTextAuthentication} from '../../components';
 
 const ResgiterPage = () => {
+  let [formValue, setFormValue] = useState({
+    username: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const handleRegister = async (formValue: any) => {
+    // false = username already exist database, reverse true.
+    const isExist = await readRegister(formValue);
+
+    if (isExist) {
+      writeAccoutToDB();
+      setFormValue({username: '', password: '', confirmPassword: ''});
+    } else {
+      Alert.alert('Tài khoản đã tồn tại');
+    }
+  };
+
+  const writeAccoutToDB = () => {
+    database()
+      .ref('/users/register/')
+      .push()
+      .set(formValue)
+      .then(() => console.log('Data set.'));
+  };
+
+  const readRegister = (formValue: any) => {
+    return database()
+      .ref('/users/register/')
+      .once('value')
+      .then(snapshot => {
+        return Object.values(snapshot.val()).every(
+          (value: any) => value.username !== formValue.username,
+        );
+      });
+  };
+
+  // database()
+  //   .ref('/users/register/')
+  //   .on('value', snapshot => {
+  //     console.log('User data: ', snapshot.val());
+  //   });
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="transparent" translucent={true} />
@@ -29,13 +74,31 @@ const ResgiterPage = () => {
         </View>
       </View>
       <View>
-        <InputTextAuthentication placeholder="Tài khoản" />
-        <InputTextAuthentication placeholder="Mật khẩu" />
-        <InputTextAuthentication placeholder="Nhập lại mật khẩu" />
+        <InputTextAuthentication
+          placeholder="Tài khoản"
+          setFormValue={setFormValue}
+          name={'username'}
+          value={formValue.username}
+        />
+        <InputTextAuthentication
+          placeholder="Mật khẩu"
+          setFormValue={setFormValue}
+          value={formValue.password}
+          name={'password'}
+        />
+        <InputTextAuthentication
+          placeholder="Nhập lại mật khẩu"
+          setFormValue={setFormValue}
+          value={formValue.confirmPassword}
+          name={'confirmPassword'}
+        />
       </View>
 
       <View style={styles.buttonView}>
-        <ButtonAuthencation title="ĐĂNG KÝ" />
+        <ButtonAuthencation
+          title="ĐĂNG KÝ"
+          onPress={() => handleRegister(formValue)}
+        />
       </View>
 
       <View style={styles.textViewStyle}>

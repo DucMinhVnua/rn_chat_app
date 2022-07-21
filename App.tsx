@@ -14,7 +14,7 @@ import {
 import {colors, variable} from './src/constants';
 
 const App = () => {
-  return <RoomChatPage />;
+  return <ResgiterPage />;
 };
 
 export default App;

@@ -6,12 +6,12 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-interface ParametersButton {
+interface Props {
   title?: string;
 }
 
-export const ButtonAuthencation = ({title}: ParametersButton) => (
-  <TouchableOpacity style={[styles.loginBtn]}>
+export const ButtonAuthencation = ({title, onPress}: any) => (
+  <TouchableOpacity style={[styles.loginBtn]} onPress={onPress}>
     <Text style={{color: colors.textColor, fontWeight: '600'}}>{title}</Text>
   </TouchableOpacity>
 );
