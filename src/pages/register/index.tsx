@@ -14,7 +14,7 @@ import {
 } from 'react-native-responsive-screen';
 import {ButtonAuthencation, InputTextAuthentication} from '../../components';
 
-const ResgiterPage = () => {
+const RegisterPage = () => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="transparent" translucent={true} />
@@ -48,7 +48,7 @@ const ResgiterPage = () => {
   );
 };
 
-export default ResgiterPage;
+export default RegisterPage;
 
 const styles = StyleSheet.create({
   container: {

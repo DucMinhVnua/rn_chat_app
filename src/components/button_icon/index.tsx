@@ -30,6 +30,8 @@ const ButtonIcon = ({
   backgroundColor = '#03A9F1',
   customStyles,
 }: Props) => {
+  const widthHeightImage = (wp(widthIconImage) + hp(heightIconImage)) / 2;
+
   return (
     <TouchableOpacity
       activeOpacity={activeOpacity}
@@ -47,8 +49,8 @@ const ButtonIcon = ({
       <Image
         resizeMode="center"
         style={{
-          width: wp(`${widthIconImage}%`),
-          height: hp(`${heightIconImage}%`),
+          width: widthHeightImage,
+          height: widthHeightImage,
         }}
         source={imagePath}
       />
