@@ -23,16 +23,15 @@ const ResgiterPage = () => {
     confirmPassword: '',
   });
 
-  const handleRegister = async (formValue: any) => {
-    // false = username already exist database, reverse true.
-    const isExist = await readRegister(formValue);
-
-    if (isExist) {
-      writeAccoutToDB();
-      setFormValue({username: '', password: '', confirmPassword: ''});
-    } else {
-      Alert.alert('Tài khoản đã tồn tại');
-    }
+  const readRegister = (formValue: any) => {
+    return database()
+      .ref('/users/register/')
+      .once('value')
+      .then(snapshot => {
+        return Object.values(snapshot.val()).every(
+          (value: any) => value.username !== formValue.username,
+        );
+      });
   };
 
   const writeAccoutToDB = () => {
@@ -43,15 +42,16 @@ const ResgiterPage = () => {
       .then(() => console.log('Data set.'));
   };
 
-  const readRegister = (formValue: any) => {
-    return database()
-      .ref('/users/register/')
-      .once('value')
-      .then(snapshot => {
-        return Object.values(snapshot.val()).every(
-          (value: any) => value.username !== formValue.username,
-        );
-      });
+  const handleRegister = async (formValue: any) => {
+    // false = username already exist database, reverse true.
+    const isExist = await readRegister(formValue);
+
+    if (isExist) {
+      writeAccoutToDB();
+      setFormValue({username: '', password: '', confirmPassword: ''});
+    } else {
+      Alert.alert('Tài khoản đã tồn tại');
+    }
   };
 
   // database()
