@@ -1,20 +1,8 @@
 import React from 'react';
-import {SafeAreaView, ScrollView, StatusBar, Text, View} from 'react-native';
-import {
-  AddGroupPage,
-  ChatDetailPage,
-  ListChatPage,
-  ResgiterPage,
-  RoomChatPage,
-} from './src/pages';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-import {colors, variable} from './src/constants';
+import NavigationSetup from './src/navigation';
 
 const App = () => {
-  return <ResgiterPage />;
+  return <NavigationSetup />;
 };
 
 export default App;
