@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
-import {colors, variable} from '../../constants';
+import { View, TextInput, StyleSheet } from 'react-native';
+import { colors, variable } from '../../constants';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -12,18 +12,26 @@ export const InputTextAuthentication = ({
   name,
   value,
 }: any) => {
-  const handleChangeText = (text: any) => {
-    setFormValue((pre: any) => {
-      pre[name] = text;
-      return {...pre};
+  const handleChangeText = (text: any, name: any, setFormValue: any) => {
+    setFormValue((prev: any) => {
+      prev[name].value = text;
+      return { ...prev };
     });
   };
+
+  const handleFocused = (setFormValue: any, name: any) => {
+    setFormValue((prev: any) => {
+      prev[name].isFocused = true;
+      return { ...prev };
+    });
+  }
 
   return (
     <View style={styles.inputBox}>
       <TextInput
+        onFocus={() => handleFocused(setFormValue, name)}
         value={value}
-        onChangeText={handleChangeText}
+        onChangeText={(text) => handleChangeText(text, name, setFormValue)}
         style={styles.inputText}
         placeholder={placeholder}
         placeholderTextColor={colors.textPlaceholder}
@@ -38,7 +46,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#D9D9D9',
     borderRadius: 8,
-    marginBottom: variable.NORMAL_PADDING,
+    marginTop: variable.NORMAL_PADDING,
   },
   inputText: {
     lineHeight: 24,

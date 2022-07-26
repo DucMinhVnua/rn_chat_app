@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   StatusBar,
@@ -8,18 +8,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {colors, variable} from '../../constants';
+import { colors, variable } from '../../constants';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {ButtonAuthencation, InputTextAuthentication} from '../../components';
+import { ButtonAuthencation, InputTextAuthentication } from '../../components';
+import RoutesName from '../../routes';
 
-const LoginPage = () => {
+const LoginPage = ({ navigation }: any) => {
   const [initialUser, setInitialUser] = useState({
     username: '',
     password: '',
   });
+
+  function goToRegister() {
+    navigation.navigate(RoutesName.register);
+  }
 
   return (
     <View style={styles.container}>
@@ -36,7 +41,7 @@ const LoginPage = () => {
         </View>
         <View style={styles.textViewStyle}>
           <Text style={styles.textStyle}>Bạn chưa có tài khoản?</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={goToRegister}>
             <Text style={styles.textOpacityStyle}>Đăng ký</Text>
           </TouchableOpacity>
         </View>

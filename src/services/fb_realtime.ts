@@ -1,14 +1,12 @@
 import database from '@react-native-firebase/database';
 
 
-function BaseRealtimeDB(this: any, endPoint: any, body?: any) {
-    this.endPoint = endPoint;
-    this.body = body;
+function BaseRealtimeDB(this: any) {
 
     // read onely one.
-    this.oneTimeRead = async function () {
+    this.oneTimeRead = async function (endPoint: any) {
         return await database()
-            .ref(this.endPoint)
+            .ref(endPoint)
             .once('value')
             .then(snapshot => {
                 return snapshot.val()
@@ -16,35 +14,33 @@ function BaseRealtimeDB(this: any, endPoint: any, body?: any) {
     };
 
     // read any change data.
-    this.realtimeChange = async function () {
+    this.realtimeChange = async function (endPoint: any) {
         return await database()
-            .ref(this.endPoint)
+            .ref(endPoint)
             .once('value')
             .then(snapshot => {
                 return snapshot.val()
             });
     };
 
-    this.settingData = async function () {
+    this.settingData = async function (endPoint: any, body: any) {
         await database()
-            .ref(this.endPoint)
+            .ref(endPoint)
             .push()
-            .set(this.body)
+            .set(body)
             .then(() => console.log('Data set.'));
     };
 
-    this.updatingData = async function () {
+    this.updatingData = async function (endPoint: any, body: any) {
         await database()
-            .ref('/users/123')
-            .update({
-                age: 32,
-            })
+            .ref(endPoint)
+            .update(body)
             .then(() => console.log('Data updated.'));
     };
 
-    this.removingData = async function () {
+    this.removingData = async function (endPoint: any) {
         await database()
-            .ref('/users/123')
+            .ref(endPoint)
             .remove()
             .then(() => console.log('Data removed.'));
     };
