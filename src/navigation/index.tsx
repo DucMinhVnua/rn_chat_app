@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 import {
   AddGroupPage,
   ChatDetailPage,
@@ -22,32 +22,34 @@ const NavigationSetup = () => {
         <Stack.Screen
           name={RoutesName.login}
           component={LoginPage}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name={RoutesName.register}
           component={RegisterPage}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name={RoutesName.addGroup}
           component={AddGroupPage}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name={RoutesName.chatDetail}
           component={ChatDetailPage}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name={RoutesName.listChat}
           component={ListChatPage}
-          options={{headerShown: false}}
+          options={{
+            headerShown: false,
+          }}
         />
         <Stack.Screen
           name={RoutesName.roomChat}
           component={RoomChatPage}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

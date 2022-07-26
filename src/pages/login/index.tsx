@@ -15,15 +15,92 @@ import {
 } from 'react-native-responsive-screen';
 import { ButtonAuthencation, InputTextAuthentication } from '../../components';
 import RoutesName from '../../routes';
+import FieldDatasModel from '../../models/FieldModel';
+import FormModel from '../../models/FormModel';
+
+const DATA_UI = {
+  placeholderUsername: 'Tài khoản',
+  placeholderPassword: 'Mật khẩu',
+  buttonTitle: 'ĐĂNG NHẬP',
+  navigateTitle: 'Bạn chưa có tài khoản?',
+  navigateTitleRegister: 'Đăng ký',
+  fieldNameUsername: 'username',
+  fieldNamePassword: 'password',
+};
 
 const LoginPage = ({ navigation }: any) => {
-  const [initialUser, setInitialUser] = useState({
-    username: '',
-    password: '',
+  const [formValue, setFormValue] = useState({
+    username: { value: '' },
+    password: { value: '' },
   });
 
   function goToRegister() {
     navigation.navigate(RoutesName.register);
+  }
+
+  function renderLoginForm() {
+    const DATAS = {
+      username: new (FieldDatasModel as any)(
+        DATA_UI.placeholderUsername,
+        DATA_UI.fieldNameUsername,
+        formValue.username,
+      ),
+      password: new (FieldDatasModel as any)(
+        DATA_UI.placeholderPassword,
+        DATA_UI.fieldNamePassword,
+        formValue.password,
+      ),
+    };
+
+    function handleChangeText(text: any, name: any) {
+      setFormValue((prev: any) => {
+        prev[name].value = text;
+        return { ...prev };
+      });
+    }
+
+    return (
+      <View>
+        {Object.values(DATAS).map((fieldData, index) => (
+          <React.Fragment key={`${index}`}>
+            <InputTextAuthentication
+              placeholder={fieldData.placeholder}
+              name={fieldData.name}
+              value={fieldData.value}
+              onChangeText={handleChangeText}
+            />
+          </React.Fragment>
+        ))}
+      </View>
+    );
+  }
+
+  function renderLoginButton() {
+
+    function handleLogin() {
+      /* check validate form value */
+      const isValidateError = new (FormModel as any)(
+        formValue,
+        formValue.username.value,
+        formValue.password.value,
+      ).checkValidateConfirm();
+
+      console.log(isValidateError)
+
+      /* check formValue validate confirm. */
+
+      /* get data from db */
+
+      /* check data already exist */
+
+      /* handle navigate list chat */
+    }
+
+    return (
+      <View style={styles.buttonViewStyle}>
+        <ButtonAuthencation title={DATA_UI.buttonTitle} onPress={handleLogin} />
+      </View>
+    );
   }
 
   return (
@@ -34,15 +111,17 @@ const LoginPage = ({ navigation }: any) => {
           style={styles.imageStyle}
           source={require('../../assets/images/logo_login.png')}
         />
-        <InputTextAuthentication placeholder="Tài khoản" />
-        <InputTextAuthentication placeholder="Mật khẩu" />
-        <View style={styles.buttonViewStyle}>
-          <ButtonAuthencation title="ĐĂNG NHẬP" />
-        </View>
+
+        {renderLoginForm()}
+
+        {renderLoginButton()}
+
         <View style={styles.textViewStyle}>
-          <Text style={styles.textStyle}>Bạn chưa có tài khoản?</Text>
+          <Text style={styles.textStyle}>{DATA_UI.navigateTitle}</Text>
           <TouchableOpacity onPress={goToRegister}>
-            <Text style={styles.textOpacityStyle}>Đăng ký</Text>
+            <Text style={styles.textOpacityStyle}>
+              {DATA_UI.navigateTitleRegister}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

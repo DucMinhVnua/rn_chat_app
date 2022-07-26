@@ -8,30 +8,17 @@ import {
 
 export const InputTextAuthentication = ({
   placeholder,
-  setFormValue,
+  onChangeText,
+  onFocus,
   name,
   value,
 }: any) => {
-  const handleChangeText = (text: any, name: any, setFormValue: any) => {
-    setFormValue((prev: any) => {
-      prev[name].value = text;
-      return { ...prev };
-    });
-  };
-
-  const handleFocused = (setFormValue: any, name: any) => {
-    setFormValue((prev: any) => {
-      prev[name].isFocused = true;
-      return { ...prev };
-    });
-  }
-
   return (
     <View style={styles.inputBox}>
       <TextInput
-        onFocus={() => handleFocused(setFormValue, name)}
+        onFocus={onFocus && (() => onFocus(name))}
         value={value}
-        onChangeText={(text) => handleChangeText(text, name, setFormValue)}
+        onChangeText={text => onChangeText(text, name)}
         style={styles.inputText}
         placeholder={placeholder}
         placeholderTextColor={colors.textPlaceholder}

@@ -1,7 +1,7 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import ImageCustom from '../image_custom';
-import {colors, variable} from '../../constants';
+import { colors, variable } from '../../constants';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -16,7 +16,7 @@ interface Props {
   isGroup?: boolean;
 }
 
-const  UserTile = ({
+const UserTile = ({
   pathImage,
   title,
   subTitle,
@@ -49,21 +49,21 @@ const  UserTile = ({
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={{color: colors.textColor}}>+5</Text>
+              <Text style={{ color: colors.textColor }}>+5</Text>
             </View>
           )}
-          <ImageCustom pathImage={pathImage} width={11} />
+          <ImageCustom pathImage={pathImage} width={5} />
         </View>
-        <View style={{paddingRight: variable.NORMAL_PADDING}}></View>
+        <View style={{ paddingRight: variable.NORMAL_PADDING }}></View>
         <View>
           <Text
-            style={{color: colors.textColor, fontWeight: 'bold', fontSize: 16}}>
+            style={{ color: colors.textColor, fontWeight: 'bold', fontSize: 16 }}>
             {title}
           </Text>
-          <Text style={{color: colors.lightGray}}>{subTitle}</Text>
+          <Text style={{ color: colors.lightGray }}>{subTitle}</Text>
         </View>
       </View>
-      <Text style={{color: colors.textColor, fontSize: 16}}>{time}</Text>
+      <Text style={{ color: colors.textColor, fontSize: 16 }}>{time}</Text>
     </TouchableOpacity>
   );
 };

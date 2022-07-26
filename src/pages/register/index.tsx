@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { colors, variable } from '../../constants';
 import {
   widthPercentageToDP as wp,
@@ -7,16 +14,24 @@ import {
 } from 'react-native-responsive-screen';
 import { ButtonAuthencation, InputTextAuthentication } from '../../components';
 import BaseRealtimeDB from '../../services/fb_realtime';
-import FieldDatas from '../../models/FieldModel';
+import FieldDatasModel from '../../models/FieldModel';
+import RoutesName from '../../routes';
+import FormModel from '../../models/FormModel';
 
 const DATA_UI = {
   headerTitle: 'Tạo tài khoản',
   buttonTitle: 'Đăng ký',
   navigateTitle: 'Bạn đã tạo tài khoản?',
   navigateTitleLogin: 'Đăng Nhập',
+  placeholderUsername: 'Tài khoản',
+  placeholderPassword: 'Mật khẩu',
+  placeholderConfirmPassword: 'Nhập lại mật khẩu',
+  fieldNameUsername: 'username',
+  fieldNamePassword: 'password',
+  fieldNameConfirmPassword: 'confirmPassword',
 };
 
-const RegisterPage = () => {
+const RegisterPage = ({ navigation }: any) => {
   let [formValue, setFormValue] = useState({
     username: {
       value: '',
@@ -32,13 +47,27 @@ const RegisterPage = () => {
     },
   });
 
-  function isTwoFieldSame(fieldValue1: any, fieldValue2: any) {
-    return fieldValue1.trim() === fieldValue2.trim();
-  }
+  // function isTwoFieldSame(fieldValue1: any, fieldValue2: any) {
+  //   return fieldValue1.trim() === fieldValue2.trim();
+  // }
 
   function renderRegisterForm(formValue: any, setFormValue: any) {
     const defaultErrorTitle = 'required';
     const titleErrorDontMatch = "don't match";
+
+    const handleChangeText = (text: any, name: any) => {
+      setFormValue((prev: any) => {
+        prev[name].value = text;
+        return { ...prev };
+      });
+    };
+
+    const handleFocused = (name: any) => {
+      setFormValue((prev: any) => {
+        prev[name].isFocused = true;
+        return { ...prev };
+      });
+    };
 
     function renderErrorWithFieldName(
       isFocused: any,
@@ -61,29 +90,30 @@ const RegisterPage = () => {
     }
 
     const DATAS = {
-      username: new (FieldDatas as any)(
-        'Tài khoản',
-        'username',
+      username: new (FieldDatasModel as any)(
+        DATA_UI.placeholderUsername,
+        DATA_UI.fieldNameUsername,
         formValue.username.value,
         formValue.username.isFocused,
         defaultErrorTitle,
       ),
-      password: new (FieldDatas as any)(
-        'Mật khẩu',
-        'password',
+      password: new (FieldDatasModel as any)(
+        DATA_UI.placeholderPassword,
+        DATA_UI.fieldNamePassword,
         formValue.password.value,
         formValue.password.isFocused,
         defaultErrorTitle,
       ),
-      confirmPassword: new (FieldDatas as any)(
-        'Nhập lại mật khẩu',
-        'confirmPassword',
+      confirmPassword: new (FieldDatasModel as any)(
+        DATA_UI.placeholderConfirmPassword,
+        DATA_UI.fieldNameConfirmPassword,
         formValue.confirmPassword.value,
         formValue.confirmPassword.isFocused,
-        isTwoFieldSame(
+        new (FormModel as any)(
+          null,
           formValue.password.value,
           formValue.confirmPassword.value,
-        )
+        ).isTwoFieldSame()
           ? defaultErrorTitle
           : titleErrorDontMatch,
       ),
@@ -95,9 +125,10 @@ const RegisterPage = () => {
           <React.Fragment key={`${index}`}>
             <InputTextAuthentication
               placeholder={fieldData.placeholder}
-              setFormValue={setFormValue}
               name={fieldData.name}
               value={fieldData.value}
+              onChangeText={handleChangeText}
+              onFocus={handleFocused}
             />
             {renderErrorWithFieldName(
               fieldData.isFocused,
@@ -110,55 +141,61 @@ const RegisterPage = () => {
     );
   }
 
-  function renderRegisterButton(formValue: any) {
+  function renderRegisterButton() {
     const baseRealtimeDB = new (BaseRealtimeDB as any)();
+    const endPointRegister = '/users/register/';
 
-    function checkValidateConfirm(formValue: any) {
-      const isMatchErrorFalse = !isTwoFieldSame(
+    const handleRegister = async () => {
+      /* check formValue validate confirm. */
+      const isValidateError = new (FormModel as any)(
+        formValue,
         formValue.password.value,
         formValue.confirmPassword.value,
-      );
+        true
+      ).checkValidateConfirm();
 
-      if (isMatchErrorFalse) {
-        return true;
-      }
+      /* get and check account already register */
+      !isValidateError
+        ? handleGetAndCheckAccount().then(isAlreadyRegister => {
+          if (!isAlreadyRegister) {
+            writeAccoutToDB();
 
-      return Object.values(formValue).some(
-        (itemValue: any) => itemValue.value === '',
-      );
-    }
+            navigation.navigate(RoutesName.listChat);
 
-    const handleRegister = async (formValue: any) => {
+            setFormValue({
+              username: { value: '', isFocused: false },
+              password: { value: '', isFocused: false },
+              confirmPassword: { value: '', isFocused: false },
+            });
+          } else {
+            Alert.alert('Tài khoản đã tồn tại!');
+          }
+        })
+        : Alert.alert('Lỗi!');
 
       async function handleGetAndCheckAccount() {
-        const endPointRegister = '/users/register/';
         const accounts = await baseRealtimeDB.oneTimeRead(endPointRegister);
 
-        return Object.values(accounts).some(({ username }: any) => username === formValue.username.value)
+        return Object.values(accounts).some(
+          ({ username }: any) => username === formValue.username.value,
+        );
       }
 
-      /* check formValue validate confirm. */
-      const isValidateError = checkValidateConfirm(formValue);
+      async function writeAccoutToDB() {
+        const body = {
+          username: formValue.username.value,
+          password: formValue.password.value,
+        };
 
-      // get and check account already register
-      const isAlreadyRegister = handleGetAndCheckAccount();
-      console.log(isAlreadyRegister);
-
-      // handle set account to firebase realtime
-
-      // if (isExist) {
-      //   writeAccoutToDB();
-      //   setFormValue({ username: '', password: '', confirmPassword: '' });
-      // } else {
-      //   Alert.alert('Tài khoản đã tồn tại');
-      // }
+        return await baseRealtimeDB.settingData(endPointRegister, body);
+      }
     };
 
     return (
       <View style={styles.buttonView}>
         <ButtonAuthencation
           title={DATA_UI.buttonTitle}
-          onPress={() => handleRegister(formValue)}
+          onPress={handleRegister}
         />
       </View>
     );
@@ -194,7 +231,7 @@ const RegisterPage = () => {
       {renderRegisterForm(formValue, setFormValue)}
 
       {/* Footer includes register button and login title */}
-      {renderRegisterButton(formValue)}
+      {renderRegisterButton()}
       {renderLoginTitle()}
     </View>
   );
