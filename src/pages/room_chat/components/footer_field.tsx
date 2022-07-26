@@ -29,7 +29,7 @@ const FooterField = () => {
           style={[
             styles.field,
             {
-              maxWidth: isFocusedField ? wp(75) : !value ? wp(65) : wp(75),
+              maxWidth: isFocusedField ? wp(75) : !value ? wp(60) : wp(75),
             },
           ]}
           placeholder="Write"
@@ -41,7 +41,7 @@ const FooterField = () => {
             <ButtonIcon
               backgroundColor={colors.lightGray}
               widthIconImage={5}
-              heightIconImage={4}
+              heightIconImage={5}
               paddingHorizontal={4}
               onTap={() => {}}
               imagePath={require('../../../assets/icons/ic_unactive_message.png')}
@@ -52,7 +52,7 @@ const FooterField = () => {
           <ButtonIcon
             backgroundColor={colors.lightGreen}
             widthIconImage={5}
-            heightIconImage={4}
+            heightIconImage={5}
             paddingHorizontal={4}
             onTap={() => {}}
             imagePath={require('../../../assets/icons/ic_camera.png')}
@@ -62,7 +62,7 @@ const FooterField = () => {
               <ButtonIcon
                 backgroundColor={colors.lightPurple}
                 widthIconImage={5}
-                heightIconImage={4}
+                heightIconImage={5}
                 paddingHorizontal={4}
                 onTap={() => {}}
                 imagePath={require('../../../assets/icons/ic_active_message.png')}
@@ -95,11 +95,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     backgroundColor: colors.inputSearchAndIbColor,
     borderRadius: 8,
-    minHeight: hp(8),
   },
 
   wrapperBtnCameraAndMessage: {
-    marginLeft: wp(5),
     position: 'absolute',
     right: 0,
     bottom: 0,
