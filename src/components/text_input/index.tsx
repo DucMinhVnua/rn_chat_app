@@ -1,24 +1,31 @@
 import React from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
-import {colors, variable} from '../../constants';
+import { View, TextInput, StyleSheet } from 'react-native';
+import { colors, variable } from '../../constants';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-interface ParametersInput {
-  placeholder?: string;
-}
-
-export const InputTextAuthentication = ({placeholder}: ParametersInput) => (
-  <View style={styles.inputBox}>
-    <TextInput
-      style={styles.inputText}
-      placeholder={placeholder}
-      placeholderTextColor={colors.textPlaceholder}
-    />
-  </View>
-);
+export const InputTextAuthentication = ({
+  placeholder,
+  onChangeText,
+  onFocus,
+  name,
+  value,
+}: any) => {
+  return (
+    <View style={styles.inputBox}>
+      <TextInput
+        onFocus={onFocus && (() => onFocus(name))}
+        value={value}
+        onChangeText={text => onChangeText(text, name)}
+        style={styles.inputText}
+        placeholder={placeholder}
+        placeholderTextColor={colors.textPlaceholder}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   inputBox: {
@@ -26,7 +33,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#D9D9D9',
     borderRadius: 8,
-    marginBottom: variable.NORMAL_PADDING,
+    marginTop: variable.NORMAL_PADDING,
   },
   inputText: {
     lineHeight: 24,
