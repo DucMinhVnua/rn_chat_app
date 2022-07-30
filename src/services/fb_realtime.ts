@@ -1,7 +1,7 @@
 import database from '@react-native-firebase/database';
 
 function BaseRealtimeDB(this: any) {
-    // read onely one.
+    // read only one.
     this.oneTimeRead = async function (endPoint: any) {
         return await database()
             .ref(endPoint)
@@ -24,7 +24,6 @@ function BaseRealtimeDB(this: any) {
     };
 
     this.settingData = async function (endPoint: any, body: any) {
-        console.log("saaa")
         await database()
             .ref(endPoint)
             .push()

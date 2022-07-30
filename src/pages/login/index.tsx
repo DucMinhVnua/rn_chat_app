@@ -1,57 +1,30 @@
 import React, { useState } from 'react';
 import {
+  Alert,
   Image,
   StatusBar,
-  StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { colors, variable } from '../../constants';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-import { ButtonAuthencation, InputTextAuthentication } from '../../components';
-import RoutesName from '../../routes';
-import FieldDatasModel from '../../models/FieldModel';
-import FormModel from '../../models/FormModel';
 
-const DATA_UI = {
-  placeholderUsername: 'Tài khoản',
-  placeholderPassword: 'Mật khẩu',
-  buttonTitle: 'ĐĂNG NHẬP',
-  navigateTitle: 'Bạn chưa có tài khoản?',
-  navigateTitleRegister: 'Đăng ký',
-  fieldNameUsername: 'username',
-  fieldNamePassword: 'password',
-};
+import { ButtonAuthencation, InputTextAuthentication } from '../../components';
+import RoutesName, { RoutesNameFBDB } from '../../routes';
+import FormModel from '../../models/FormModel';
+import DATA_UI from './dataui'
+import { DATASFIELD, DATA_FORM_DEFAULT, NOTIFICATIONS } from './values';
+import BaseRealtimeDB from '../../services/fb_realtime';
+import styles from './styles';
+
 
 const LoginPage = ({ navigation }: any) => {
-  const [formValue, setFormValue] = useState({
-    username: { value: '' },
-    password: { value: '' },
-  });
+  const [formValue, setFormValue] = useState(DATA_FORM_DEFAULT);
 
   function goToRegister() {
     navigation.navigate(RoutesName.register);
   }
 
   function renderLoginForm() {
-    const DATAS = {
-      username: new (FieldDatasModel as any)(
-        DATA_UI.placeholderUsername,
-        DATA_UI.fieldNameUsername,
-        formValue.username,
-      ),
-      password: new (FieldDatasModel as any)(
-        DATA_UI.placeholderPassword,
-        DATA_UI.fieldNamePassword,
-        formValue.password,
-      ),
-    };
-
     function handleChangeText(text: any, name: any) {
       setFormValue((prev: any) => {
         prev[name].value = text;
@@ -61,7 +34,7 @@ const LoginPage = ({ navigation }: any) => {
 
     return (
       <View>
-        {Object.values(DATAS).map((fieldData, index) => (
+        {Object.values(DATASFIELD(formValue)).map((fieldData, index) => (
           <React.Fragment key={`${index}`}>
             <InputTextAuthentication
               placeholder={fieldData.placeholder}
@@ -85,15 +58,30 @@ const LoginPage = ({ navigation }: any) => {
         formValue.password.value,
       ).checkValidateConfirm();
 
-      console.log(isValidateError)
+      /* get data from db and check confirm */
+      !isValidateError
+        ? handleGetAndCheckAccount().then(isAlreadyRegister => {
+          if (isAlreadyRegister) {
+            navigation.navigate(RoutesName.listChat);
+            setFormValue(DATA_FORM_DEFAULT);
+          } else {
+            Alert.alert(NOTIFICATIONS.notExisted);
+          }
+        })
+        : Alert.alert(NOTIFICATIONS.error);
+    }
 
-      /* check formValue validate confirm. */
+    async function handleGetAndCheckAccount() {
+      const baseRealtimeDB = new (BaseRealtimeDB as any)();
 
-      /* get data from db */
+      const accounts = await baseRealtimeDB.oneTimeRead(RoutesNameFBDB.register);
 
-      /* check data already exist */
+      if (!accounts)
+        return false;
 
-      /* handle navigate list chat */
+      return Object.values(accounts).some(
+        ({ username, password }: any) => username === formValue.username.value && password === formValue.password.value,
+      );
     }
 
     return (
@@ -131,34 +119,4 @@ const LoginPage = ({ navigation }: any) => {
 
 export default LoginPage;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: colors.primaryColor,
-  },
-  imageHeader: {
-    alignItems: 'center',
-  },
-  imageStyle: {
-    width: wp('40%'),
-    height: hp('20%'),
-    marginBottom: variable.NORMAL_PADDING * 3,
-  },
-  buttonViewStyle: {
-    marginTop: variable.NORMAL_PADDING * 3,
-  },
-  textViewStyle: {
-    flexDirection: 'row',
-    marginTop: variable.NORMAL_PADDING,
-  },
-  textStyle: {
-    color: colors.textColor,
-    fontWeight: '300',
-    marginRight: wp('1%'),
-  },
-  textOpacityStyle: {
-    color: colors.textColor,
-    fontWeight: '700',
-  },
-});
+

@@ -2,59 +2,23 @@ import React, { useState } from 'react';
 import {
   Alert,
   Image,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { colors, variable } from '../../constants';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+
 import { ButtonAuthencation, InputTextAuthentication } from '../../components';
 import BaseRealtimeDB from '../../services/fb_realtime';
-import FieldDatasModel from '../../models/FieldModel';
-import RoutesName from '../../routes';
+import RoutesName, { RoutesNameFBDB } from '../../routes';
 import FormModel from '../../models/FormModel';
-
-const DATA_UI = {
-  headerTitle: 'Tạo tài khoản',
-  buttonTitle: 'Đăng ký',
-  navigateTitle: 'Bạn đã tạo tài khoản?',
-  navigateTitleLogin: 'Đăng Nhập',
-  placeholderUsername: 'Tài khoản',
-  placeholderPassword: 'Mật khẩu',
-  placeholderConfirmPassword: 'Nhập lại mật khẩu',
-  fieldNameUsername: 'username',
-  fieldNamePassword: 'password',
-  fieldNameConfirmPassword: 'confirmPassword',
-};
+import DATA_UI from './dataui'
+import styles from './styles';
+import { BODY_REQUEST, DATASFIELD, DATA_FORM_DEFAULT, NOTIFICATIONS, titleErrorDontMatch } from './values';
 
 const RegisterPage = ({ navigation }: any) => {
-  let [formValue, setFormValue] = useState({
-    username: {
-      value: '',
-      isFocused: false,
-    },
-    password: {
-      value: '',
-      isFocused: false,
-    },
-    confirmPassword: {
-      value: '',
-      isFocused: false,
-    },
-  });
-
-  // function isTwoFieldSame(fieldValue1: any, fieldValue2: any) {
-  //   return fieldValue1.trim() === fieldValue2.trim();
-  // }
+  let [formValue, setFormValue] = useState(DATA_FORM_DEFAULT);
 
   function renderRegisterForm(formValue: any, setFormValue: any) {
-    const defaultErrorTitle = 'required';
-    const titleErrorDontMatch = "don't match";
-
     const handleChangeText = (text: any, name: any) => {
       setFormValue((prev: any) => {
         prev[name].value = text;
@@ -74,7 +38,7 @@ const RegisterPage = ({ navigation }: any) => {
       value: any,
       errorTitle: string,
     ) {
-      if (isFocused && errorTitle === "don't match") {
+      if (isFocused && errorTitle === titleErrorDontMatch) {
         return (
           <Text style={{ fontSize: 14, color: 'red', paddingTop: 5 }}>
             {errorTitle}
@@ -89,39 +53,9 @@ const RegisterPage = ({ navigation }: any) => {
       ) : null;
     }
 
-    const DATAS = {
-      username: new (FieldDatasModel as any)(
-        DATA_UI.placeholderUsername,
-        DATA_UI.fieldNameUsername,
-        formValue.username.value,
-        formValue.username.isFocused,
-        defaultErrorTitle,
-      ),
-      password: new (FieldDatasModel as any)(
-        DATA_UI.placeholderPassword,
-        DATA_UI.fieldNamePassword,
-        formValue.password.value,
-        formValue.password.isFocused,
-        defaultErrorTitle,
-      ),
-      confirmPassword: new (FieldDatasModel as any)(
-        DATA_UI.placeholderConfirmPassword,
-        DATA_UI.fieldNameConfirmPassword,
-        formValue.confirmPassword.value,
-        formValue.confirmPassword.isFocused,
-        new (FormModel as any)(
-          null,
-          formValue.password.value,
-          formValue.confirmPassword.value,
-        ).isTwoFieldSame()
-          ? defaultErrorTitle
-          : titleErrorDontMatch,
-      ),
-    };
-
     return (
       <View>
-        {Object.values(DATAS).map((fieldData, index) => (
+        {Object.values(DATASFIELD(formValue)).map((fieldData, index) => (
           <React.Fragment key={`${index}`}>
             <InputTextAuthentication
               placeholder={fieldData.placeholder}
@@ -143,7 +77,6 @@ const RegisterPage = ({ navigation }: any) => {
 
   function renderRegisterButton() {
     const baseRealtimeDB = new (BaseRealtimeDB as any)();
-    const endPointRegister = '/users/register/';
 
     const handleRegister = async () => {
       /* check formValue validate confirm. */
@@ -162,19 +95,21 @@ const RegisterPage = ({ navigation }: any) => {
 
             navigation.navigate(RoutesName.listChat);
 
-            setFormValue({
-              username: { value: '', isFocused: false },
-              password: { value: '', isFocused: false },
-              confirmPassword: { value: '', isFocused: false },
-            });
+            setFormValue(DATA_FORM_DEFAULT);
           } else {
-            Alert.alert('Tài khoản đã tồn tại!');
+            Alert.alert(NOTIFICATIONS.alreadyExists);
           }
         })
-        : Alert.alert('Lỗi!');
+        : Alert.alert(NOTIFICATIONS.error);
 
       async function handleGetAndCheckAccount() {
-        const accounts = await baseRealtimeDB.oneTimeRead(endPointRegister);
+        const accounts = await baseRealtimeDB.oneTimeRead(RoutesNameFBDB.register);
+
+        // if table hasn't in BD, create new table
+        if (!accounts) {
+          writeAccoutToDB();
+          return;
+        }
 
         return Object.values(accounts).some(
           ({ username }: any) => username === formValue.username.value,
@@ -182,12 +117,7 @@ const RegisterPage = ({ navigation }: any) => {
       }
 
       async function writeAccoutToDB() {
-        const body = {
-          username: formValue.username.value,
-          password: formValue.password.value,
-        };
-
-        return await baseRealtimeDB.settingData(endPointRegister, body);
+        return await baseRealtimeDB.settingData(RoutesNameFBDB.register, BODY_REQUEST(formValue));
       }
     };
 
@@ -239,44 +169,3 @@ const RegisterPage = ({ navigation }: any) => {
 
 export default RegisterPage;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.primaryColor,
-    padding: variable.NORMAL_PADDING,
-    justifyContent: 'center',
-  },
-  imageView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: variable.NORMAL_PADDING * 3,
-  },
-  imageStyle: {
-    width: wp('12%'),
-    height: hp('6%'),
-    borderRadius: 10,
-    marginRight: variable.NORMAL_PADDING / 2,
-  },
-  textTitleStyle: {
-    color: colors.textColor,
-    fontWeight: '700',
-    fontSize: hp('3%'),
-  },
-  textViewStyle: {
-    flexDirection: 'row',
-    marginTop: variable.NORMAL_PADDING,
-    justifyContent: 'center',
-  },
-  buttonView: {
-    marginTop: variable.NORMAL_PADDING * 2,
-  },
-  textStyle: {
-    color: colors.textColor,
-    fontWeight: '300',
-    marginRight: wp('1%'),
-  },
-  textOpacityStyle: {
-    color: colors.textColor,
-    fontWeight: '700',
-  },
-});

@@ -7,4 +7,8 @@ const RoutesName = {
   roomChat: 'RoomChat',
 };
 
+export const RoutesNameFBDB = {
+  register: '/users/register/'
+}
+
 export default RoutesName;
