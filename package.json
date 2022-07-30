@@ -20,8 +20,7 @@
     "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "^4.3.1",
     "react-native-screens": "^3.15.0",
-    "react-native-simple-toast": "^1.1.4",
-    "yup": "^0.32.11"
+    "react-native-simple-toast": "^1.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
