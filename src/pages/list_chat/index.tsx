@@ -1,5 +1,5 @@
 import { BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ButtonIcon,
   ImageCustom,
@@ -12,18 +12,52 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import CardSlide from './components/card_slide';
+import RoutesName from '../../routes';
+import Modal from 'react-native-modal';
 
-const ListChatPage = () => {
+const ListChatPage = ({ navigation }: any) => {
 
+  const [isModalVisible, setModalVisible] = useState(false)
+
+  // don't navigate back of button back android
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
-    return () => backHandler.remove()
-  }, [])
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => true,
+    );
+    return () => backHandler.remove();
+  }, []);
+
+
+  function renderAddModal() {
+
+    function handleBackdropPress() {
+      console.log('Vào đây')
+      setModalVisible(false);
+    }
+
+    return (
+      <Modal
+        isVisible={isModalVisible}
+        onBackdropPress={handleBackdropPress}
+      >
+        <View style={{ flex: 1 }}>
+          <Text>I am the modal content!</Text>
+        </View>
+      </Modal>
+    )
+  }
+
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.avatarWithTitle}>
-        <ImageCustom pathImage={"https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg"} width={5} />
+        <ImageCustom
+          pathImage={
+            'https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg'
+          }
+          width={5}
+        />
         <Text
           style={{
             paddingLeft: variable.NORMAL_PADDING,
@@ -37,7 +71,10 @@ const ListChatPage = () => {
       <View style={{ paddingTop: variable.NORMAL_PADDING }}></View>
 
       <View
-        style={{ paddingRight: variable.NORMAL_PADDING, flexDirection: 'row' }}>
+        style={{
+          paddingRight: variable.NORMAL_PADDING,
+          flexDirection: 'row',
+        }}>
         <View style={{ flex: 1 }}>
           <SearchButtonRight
             imagePath={require('../../assets/icons/ic_search_btn.png')}
@@ -51,7 +88,9 @@ const ListChatPage = () => {
         <View style={{ paddingLeft: variable.NORMAL_PADDING }}>
           <ButtonIcon
             imagePath={require('../../assets/icons/ic_add.png')}
-            onTap={() => { }}
+            onTap={() => {
+              setModalVisible(true);
+            }}
           />
         </View>
       </View>
@@ -69,7 +108,9 @@ const ListChatPage = () => {
       <View style={{ paddingTop: variable.NORMAL_PADDING }}></View>
 
       <View style={{ maxHeight: hp('25%') }}>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}>
           <CardSlide />
           <View style={{ paddingRight: variable.NORMAL_PADDING }}></View>
           <CardSlide />
@@ -88,75 +129,97 @@ const ListChatPage = () => {
       <View>
         <UserTile
           onPress={() => { }}
-          pathImage={"https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg"}
+          pathImage={
+            'https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg'
+          }
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => { }}
-          pathImage={"https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg"}
+          pathImage={
+            'https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg'
+          }
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => { }}
-          pathImage={"https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg"}
+          pathImage={
+            'https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg'
+          }
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => { }}
-          pathImage={"https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg"}
+          pathImage={
+            'https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg'
+          }
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => { }}
-          pathImage={"https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg"}
+          pathImage={
+            'https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg'
+          }
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => { }}
-          pathImage={"https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg"}
+          pathImage={
+            'https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg'
+          }
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => { }}
-          pathImage={"https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg"}
+          pathImage={
+            'https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg'
+          }
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => { }}
-          pathImage={"https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg"}
+          pathImage={
+            'https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg'
+          }
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => { }}
-          pathImage={"https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg"}
+          pathImage={
+            'https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg'
+          }
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
         <UserTile
           onPress={() => { }}
-          pathImage={"https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg"}
+          pathImage={
+            'https://gamek.mediacdn.vn/133514250583805952/2021/9/17/photo-1-1631856680040545802895.jpg'
+          }
           title={'Maciej Kowalski'}
           subTitle={'Will do, super, thank you'}
           time={'08:43'}
         />
       </View>
+
+      {renderAddModal()}
     </ScrollView>
   );
 };
